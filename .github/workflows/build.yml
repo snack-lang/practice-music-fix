@@ -12,17 +12,19 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v4
 
-      - name: Install Geode CLI
+      - name: Download Geode CLI 3.9.0
         run: |
-          irm https://raw.githubusercontent.com/geode-sdk/cli/main/install.ps1 | iex
+          $cliUrl = "https://github.com/geode-sdk/cli/releases/download/v3.9.0/geode-windows.exe"
+          Invoke-WebRequest -Uri $cliUrl -OutFile "geode.exe"
+          echo "$PWD" | Out-File -FilePath $env:GITHUB_PATH -Append
 
-      - name: Install Geode SDK 3.9.0
-        run: geode sdk install --version 3.9.0 --yes
+      - name: Install Geode SDK
+        run: .\geode.exe sdk install --version 3.9.0 --yes
 
-      - name: Build the mod
-        run: geode build
+      - name: Build mod
+        run: .\geode.exe build
 
-      - name: Upload compiled mod
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: mod
