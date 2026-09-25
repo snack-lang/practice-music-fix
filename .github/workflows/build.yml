@@ -9,22 +9,12 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
-      - name: Checkout source
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Download Geode CLI v3.9.0
-        run: |
-          $ProgressPreference = 'SilentlyContinue'
-          $headers = @{
-            "Accept" = "application/octet-stream"
-          }
-          Invoke-WebRequest -Uri "https://github.com/geode-sdk/cli/releases/download/v3.9.0/geode-windows.exe" -Headers $headers -OutFile "geode.exe"
-
-      - name: Install SDK
-        run: .\geode.exe sdk install --version 3.9.0 --yes
-
-      - name: Build mod
-        run: .\geode.exe build
+      - name: Build mod with Geode CI
+        uses: geode-sdk/build-mod-action@v1
+        with:
+          geode-version: "3.9.0"
 
       - name: Upload compiled mod
         uses: actions/upload-artifact@v4
