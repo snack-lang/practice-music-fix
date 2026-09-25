@@ -11,12 +11,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Build mod with Geode CI
-        uses: geode-sdk/build-mod-action@v1
+      - name: Build mod
+        uses: geode-sdk/build-geode-mod@v1
         with:
           geode-version: "3.9.0"
+          target: windows
 
-      - name: Upload compiled mod
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: mod
