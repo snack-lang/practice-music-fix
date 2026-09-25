@@ -12,19 +12,19 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v4
 
-      - name: Download Geode CLI 3.9.0
-        run: |
-          $cliUrl = "https://github.com/geode-sdk/cli/releases/download/v3.9.0/geode-windows.exe"
-          Invoke-WebRequest -Uri $cliUrl -OutFile "geode.exe"
-          echo "$PWD" | Out-File -FilePath $env:GITHUB_PATH -Append
+      - name: Install Geode CLI 3.9.0 via winget
+        run: winget install -e --id GeodeSDK.GeodeCLI --version 3.9.0 --accept-package-agreements --accept-source-agreements
+
+      - name: Add winget install path to PATH
+        run: echo "C:\Program Files\Geode SDK\CLI" | Out-File -FilePath $env:GITHUB_PATH -Append
 
       - name: Install Geode SDK
-        run: .\geode.exe sdk install --version 3.9.0 --yes
+        run: geode sdk install --version 3.9.0 --yes
 
       - name: Build mod
-        run: .\geode.exe build
+        run: geode build
 
-      - name: Upload artifact
+      - name: Upload compiled mod
         uses: actions/upload-artifact@v4
         with:
           name: mod
