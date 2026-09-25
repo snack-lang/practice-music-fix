@@ -15,7 +15,10 @@ jobs:
       - name: Download Geode CLI v3.9.0
         run: |
           $ProgressPreference = 'SilentlyContinue'
-          Invoke-WebRequest -Uri "https://github.com/geode-sdk/cli/releases/download/v3.9.0/geode-windows.exe" -OutFile "geode.exe"
+          $headers = @{
+            "Accept" = "application/octet-stream"
+          }
+          Invoke-WebRequest -Uri "https://github.com/geode-sdk/cli/releases/download/v3.9.0/geode-windows.exe" -Headers $headers -OutFile "geode.exe"
 
       - name: Install SDK
         run: .\geode.exe sdk install --version 3.9.0 --yes
