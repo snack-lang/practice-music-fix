@@ -1,0 +1,11 @@
+{
+	"id": "snake.practicemusicfix",
+	"name": "PracticeMusicFix",
+	"version": "v1.0.0",
+	"developer": "snake",
+	"description": "Restore original level music in practice mode.",
+	"geode": "3.9.0",
+	"gd": {
+		"win": "2.2074"
+	}
+}
